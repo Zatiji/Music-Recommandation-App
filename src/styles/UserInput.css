@@ -1,0 +1,50 @@
+.user-input-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 1rem;
+	width: 95%;
+	border: 2px solid black;
+	border-radius: 50px;
+	background-color: white;
+	overflow-y: auto;
+	resize: none;
+}
+
+.user-input-field {
+	border: none;
+	outline: none;
+	padding: 1rem;
+	resize: none;
+	width: 100%;
+	font-size: 1rem;
+	line-height: 1.4;
+	overflow-y: auto;
+	max-height: 150px;
+	border-radius: 12px;
+}
+
+.send-button {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background-color: black;
+	color: white;
+	border: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+.send-button:active {
+	transform: scale(0.85);
+	transition: transform 0.2s ease;
+}
+
+@media (max-width: 768px) {
+	.app-container {
+		margin: 0px;
+		width: 100%;
+	}
+}
