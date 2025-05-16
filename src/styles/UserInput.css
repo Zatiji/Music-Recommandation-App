@@ -7,7 +7,7 @@
 	border: 2px solid black;
 	border-radius: 50px;
 	background-color: white;
-	overflow-y: auto;
+	overflow-y: hidden;
 	resize: none;
 }
 
@@ -20,8 +20,8 @@
 	font-size: 1rem;
 	line-height: 1.4;
 	overflow-y: auto;
-	max-height: 150px;
 	border-radius: 12px;
+	box-sizing: border-box;
 }
 
 .send-button {
@@ -35,11 +35,14 @@
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
+	flex-shrink: 0;
+	transition: transform 0.2s ease;
 }
-
+.send-button:hover {
+	transform: scale(1.15);
+}
 .send-button:active {
 	transform: scale(0.85);
-	transition: transform 0.2s ease;
 }
 
 @media (max-width: 768px) {
