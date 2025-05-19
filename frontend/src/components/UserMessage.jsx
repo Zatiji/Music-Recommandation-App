@@ -1,4 +1,4 @@
-import "../styles/UserMessage.css"
+import "../styles/Messages.css"
 
 function UserMessage({ text }) {
   return (
