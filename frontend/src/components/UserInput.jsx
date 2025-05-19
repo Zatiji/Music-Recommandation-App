@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import "../styles/UserInput.css";
 import { FaArrowUp } from "react-icons/fa";
 
-function UserInput() {
+function UserInput({ onSend}) {
 	const [userInput, setUserInput] = useState("");
 	const textareaRef = useRef(null);
 	const initialHeightRef = useRef(null);
@@ -14,8 +14,9 @@ function UserInput() {
 	}, []);
 
 	const handleSend = () => {
-		console.log("Envoyé :", userInput);
-		setUserInput("");
+		 if (onSend) onSend(userInput);
+    	setUserInput("");
+
 		if (textareaRef.current) {
 			textareaRef.current.style.height = initialHeightRef.current
 				? `${initialHeightRef.current}px`
