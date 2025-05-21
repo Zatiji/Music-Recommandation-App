@@ -9,7 +9,7 @@ function App() {
   const handleSendMessage = (newMessage) => {
   if (newMessage.trim() === "") return;
 
-  const botResponse = "CACA !!"; // Mettre la méthode GPT ici
+  const botResponse = "hahaHshdgufiuasdciyadvyiadvaiyudvakuyvaksuvadskvadkuvbadkvakhvbadhkvbdhkvbadhkvbadkhbadykgvadyivas !!"; // Mettre la méthode GPT ici
 
   setMessages((prevMessages) => [
     ...prevMessages,

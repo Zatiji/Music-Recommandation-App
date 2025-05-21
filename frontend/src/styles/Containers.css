@@ -19,6 +19,12 @@
   height: auto;
 }
 
+.image-in-bot-message {
+  width: 50px;
+  height: auto;
+  margin-bottom: 15px;
+}
+
 .app-container {
   height: 90vh;
   width: 60%;     
