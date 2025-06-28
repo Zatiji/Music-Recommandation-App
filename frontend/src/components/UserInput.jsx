@@ -14,7 +14,7 @@ function UserInput({ onSend}) {
 	}, []);
 
 	const handleSend = () => {
-		 if (onSend) onSend(userInput);
+		if (onSend) onSend(userInput);
     	setUserInput("");
 
 		if (textareaRef.current) {

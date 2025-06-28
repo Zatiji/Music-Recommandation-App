@@ -1,5 +1,0 @@
-fastapi
-uvicorn
-openai
-redis
-pydantic

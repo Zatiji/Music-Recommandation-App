@@ -6,17 +6,33 @@ import "./styles/Containers.css"
 function App() {
   const [messages, setMessages] = useState([]);
 
-  const handleSendMessage = (newMessage) => {
-  if (newMessage.trim() === "") return;
+  const handleSendMessage = async (newMessage) => {
+    if (newMessage.trim() === "") return;
 
-  const botResponse = "hahaHshdgufiuasdciyadvyiadvaiyudvakuyvaksuvadskvadkuvbadkvakhvbadhkvbdhkvbadhkvbadkhbadykgvadyivas !!"; // Mettre la méthode GPT ici
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      { type: "user-message", content: newMessage }
+    ]);
 
-  setMessages((prevMessages) => [
-    ...prevMessages,
-    { type: "user-message", content: newMessage },
-    { type: "bot-message", content: botResponse }
-  ]);
-};
+    try {
+      const response = await fetch("http://localhost:5001/generate-response", { // -------- Local host hardcodé !!!
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ message: newMessage })
+      });
+
+      const data = await response.json();
+
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { type: "assistant", content: data.response }
+      ]);
+    } catch (error) {
+      console.error(" :", error);
+    }
+  };
 
   return (
     <div className="app-container">

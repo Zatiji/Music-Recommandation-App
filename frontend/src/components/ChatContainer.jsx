@@ -28,7 +28,7 @@ function ChatContainer({ messages }) {
 				messages.map((msg, index) => {
 					if (msg.type === "user-message") {
 						return <UserMessage key={index} text={msg.content} />;
-					} else if (msg.type === "bot-message") {
+					} else if (msg.type === "assistant") {
 						return <BotMessage key={index} text={msg.content} />;
 					} else {
 						return null;
