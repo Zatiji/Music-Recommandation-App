@@ -2,8 +2,7 @@
 .bot-message {
 	align-self: flex-end;
 	position: relative;
-	max-width: 500px;           
-	width: fit-content;         
+	width: fit-content;                
 	text-align: left;       
 	line-height: 1.4em;
 	font-family: sans-serif;
@@ -23,9 +22,11 @@
 .user-message {
 	align-self: flex-end;
 	background-color: lightgrey;
+	max-width: 90%;  
 }
 
 .bot-message {
 	align-self: flex-start;
 	background-color: #fff;
+	max-width: 90%
 }
