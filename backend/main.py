@@ -1,4 +1,4 @@
-from routes import create_app
+from app import create_app
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -8,4 +8,10 @@ load_dotenv(env_path)
 app = create_app()
 
 if __name__ == "__main__":
-    app.run(debug=False, port=5001)
+    app.run(
+        host="0.0.0.0",
+        port=5001,
+        debug=False,
+        threaded=True,
+        use_reloader=False
+    )
