@@ -1,17 +1,18 @@
 from flask import Blueprint, request, Response, stream_with_context
 
-from app.services.llm import stream_ai_response
+from app.services.llm import streamAiResponse
 import json
 
 generate_response = Blueprint("generate_response", __name__)
 
 @generate_response.route("/generate-response", methods=["OPTIONS", "POST"])
-def handle_generate_response():
+def handleGenerateResponse():
     if request.method == "OPTIONS":
         return "", 204
     
     data = request.get_json(silent=True) or {}
     user_message = data.get("message", "")
+    session_id = data.get("session_id", "default")
     if not user_message:
         return Response('Missing "message"', status=400)
 
@@ -19,7 +20,7 @@ def handle_generate_response():
     @stream_with_context
     def generate():
         # Send each chunk as JSON: {"delta": "..."}
-        for chunk in stream_ai_response(user_message):
+        for chunk in streamAiResponse(user_message, sessionId=session_id):
             yield f"data: {json.dumps({'delta': chunk})}\n\n"
         # Signal completion
         yield f"data: {json.dumps({'done': True})}\n\n"
