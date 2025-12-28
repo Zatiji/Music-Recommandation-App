@@ -103,6 +103,36 @@ export default function useChatSessions() {
     return newChat.id;
   }, []);
 
+  const deleteChat = useCallback((chatId) => {
+    setChats(prev => {
+      const remaining = prev.filter(chat => chat.id !== chatId);
+      if (remaining.length === 0) {
+        const fallback = {
+          id: crypto.randomUUID(),
+          title: "New chat",
+          messages: [],
+        };
+        setActiveChatId(fallback.id);
+        return [fallback];
+      }
+      if (chatId === activeChatId) {
+        setActiveChatId(remaining[0].id);
+      }
+      return remaining;
+    });
+  }, [activeChatId]);
+
+  const renameChat = useCallback((chatId, title) => {
+    const nextTitle = title.trim() || "New chat";
+    setChats(prev =>
+      prev.map(chat =>
+        chat.id === chatId
+          ? { ...chat, title: nextTitle }
+          : chat
+      )
+    );
+  }, []);
+
   return {
     chats,
     activeChat,
@@ -114,5 +144,7 @@ export default function useChatSessions() {
     clearActiveStream,
     setActiveStream,
     createNewChat,
+    deleteChat,
+    renameChat,
   };
 }

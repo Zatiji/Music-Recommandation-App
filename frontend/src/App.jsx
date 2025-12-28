@@ -19,6 +19,8 @@ function App() {
     clearActiveStream,
     setActiveStream,
     createNewChat,
+    deleteChat,
+    renameChat,
   } = useChatSessions();
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
@@ -59,6 +61,15 @@ function App() {
     setActiveChatId(chatId);
   };
 
+  const handleDeleteChat = (chatId) => {
+    clearActiveStream();
+    deleteChat(chatId);
+  };
+
+  const handleRenameChat = (chatId, title) => {
+    renameChat(chatId, title);
+  };
+
   return (
     <div className="app-shell">
       <Sidebar
@@ -68,6 +79,8 @@ function App() {
         onToggleCollapse={() => setIsSidebarCollapsed(prev => !prev)}
         onNewChat={handleNewChat}
         onSelectChat={handleSelectChat}
+        onDeleteChat={handleDeleteChat}
+        onRenameChat={handleRenameChat}
       />
       <div className="app-container">
         <ChatContainer messages={activeChat.messages} />
