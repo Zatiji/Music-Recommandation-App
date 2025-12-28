@@ -5,7 +5,7 @@ import Sidebar from "./components/Sidebar";
 import UserInput from "./components/UserInput";
 import useChatSessions from "./hooks/useChatSessions";
 import { streamChatResponse } from "./service/chatApi";
-import "./styles/Containers.css";
+import "./styles/Layout.css";
 
 function App() {
   const {

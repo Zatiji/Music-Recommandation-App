@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight, FaPlus, FaTrash, FaPen } from "react-icons/fa";
+import SidebarItem from "./SidebarItem";
+import { getChatLabel } from "../utils/chatLabel";
+import "../styles/Sidebar.css";
 
 function Sidebar({
   chats,
@@ -19,17 +22,6 @@ function Sidebar({
   });
   const [editingChatId, setEditingChatId] = useState(null);
   const [editingValue, setEditingValue] = useState("");
-
-  const getChatLabel = (chat) => {
-    const firstUserMessage = chat.messages.find(m => m.type === "user-message");
-    const hasCustomTitle = chat.title && chat.title.trim() !== "" && chat.title !== "New chat";
-    const rawLabel = hasCustomTitle
-      ? chat.title
-      : firstUserMessage?.content?.trim() || chat.title || "New chat";
-    const singleLine = rawLabel.split("\n")[0];
-    if (singleLine.length > 32) return `${singleLine.slice(0, 32)}...`;
-    return singleLine;
-  };
 
   useEffect(() => {
     if (!menuState.isOpen) return;
@@ -98,38 +90,23 @@ function Sidebar({
         </button>
       </div>
       <div className="session-list">
-        {chats.map(chat => (
-          <button
-            key={chat.id}
-            className={`session-item ${chat.id === activeChatId ? "active" : ""}`}
-            onClick={() => onSelectChat(chat.id)}
-            onContextMenu={(event) => handleContextMenu(event, chat.id)}
-            title={getChatLabel(chat)}
-            disabled={editingChatId === chat.id}
-          >
-            {editingChatId === chat.id ? (
-              <input
-                className="session-title-input"
-                value={editingValue}
-                autoFocus
-                onChange={(event) => setEditingValue(event.target.value)}
-                onClick={(event) => event.stopPropagation()}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter") {
-                    event.preventDefault();
-                    handleRenameCommit();
-                  } else if (event.key === "Escape") {
-                    event.preventDefault();
-                    handleRenameCancel();
-                  }
-                }}
-                onBlur={handleRenameCommit}
-              />
-            ) : (
-              <span className="session-title">{getChatLabel(chat)}</span>
-            )}
-          </button>
-        ))}
+        {chats.map(chat => {
+          const label = getChatLabel(chat);
+          return (
+            <SidebarItem
+              key={chat.id}
+              isActive={chat.id === activeChatId}
+              isEditing={editingChatId === chat.id}
+              editingValue={editingValue}
+              onSelect={() => onSelectChat(chat.id)}
+              onContextMenu={(event) => handleContextMenu(event, chat.id)}
+              onEditValueChange={(event) => setEditingValue(event.target.value)}
+              onCommit={handleRenameCommit}
+              onCancel={handleRenameCancel}
+              label={label}
+            />
+          );
+        })}
       </div>
       {menuState.isOpen && (
         <div

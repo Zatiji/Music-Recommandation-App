@@ -1,0 +1,5 @@
+.user-message {
+  align-self: flex-end;
+  background-color: lightgrey;
+  max-width: 90%;
+}

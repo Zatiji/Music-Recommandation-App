@@ -1,4 +1,5 @@
-import "../styles/Messages.css";
+import "../styles/MessageBase.css";
+import "../styles/BotMessage.css";
 import reactLogo from "../assets/react.svg";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -24,7 +25,7 @@ function BotMessage({ text }) {
 
   return (
     <>
-      <div className="bot-message">
+      <div className="message bot-message">
         <ReactMarkdown
           remarkPlugins={[remarkGfm, remarkBreaks]}
           components={{

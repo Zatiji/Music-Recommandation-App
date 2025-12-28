@@ -1,8 +1,9 @@
-import "../styles/Messages.css"
+import "../styles/MessageBase.css";
+import "../styles/UserMessage.css";
 
 function UserMessage({ text }) {
   return (
-    <div className="user-message">
+    <div className="message user-message">
       {text}
     </div>
   );

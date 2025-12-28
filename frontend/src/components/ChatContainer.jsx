@@ -2,7 +2,7 @@ import UserMessage from "./UserMessage";
 import BotMessage from "./BotMessage";
 import reactLogo from "../assets/react.svg";
 import { useEffect, useRef } from "react";
-import "../styles/Containers.css";
+import "../styles/Chat.css";
 
 function ChatContainer({ messages }) {
 	const containerRef = useRef(null);

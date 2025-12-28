@@ -1,0 +1,11 @@
+.bot-message {
+  align-self: flex-start;
+  background-color: transparent;
+  max-width: 90%;
+}
+
+.image-in-bot-message {
+  width: 50px;
+  height: auto;
+  margin-bottom: 15px;
+}
