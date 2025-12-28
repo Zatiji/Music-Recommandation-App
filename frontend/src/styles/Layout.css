@@ -40,6 +40,21 @@
 
   .app-shell {
     flex-direction: column;
-    height: 92vh;
+    height: auto;
+    min-height: 100vh;
+  }
+}
+
+@media (max-width: 600px) {
+  #root {
+    padding: 0.5rem;
+  }
+
+  .app-shell {
+    gap: 0.75rem;
+  }
+
+  .app-container {
+    padding: 0.75rem;
   }
 }
