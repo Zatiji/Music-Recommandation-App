@@ -1,12 +1,13 @@
 #root {
   margin: 0;
-  padding: 2rem;
+  padding: 1.5rem;
   text-align: center;
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
+  box-sizing: border-box;
 }
 
 .idle-image {
@@ -25,13 +26,132 @@
   margin-bottom: 15px;
 }
 
-.app-container {
+.app-shell {
+  width: min(1200px, 100%);
   height: 90vh;
-  width: 60%;     
+  display: flex;
+  gap: 1rem;
+}
+
+.sidebar {
+  width: 240px;
+  border: 2px solid black;
+  border-radius: 28px;
   padding: 1rem;
   display: flex;
-  flex-direction: column; 
-  align-items: center;    
+  flex-direction: column;
+  gap: 1rem;
+  background-color: white;
+  box-sizing: border-box;
+  transition: width 0.2s ease, padding 0.2s ease;
+  overflow: hidden;
+}
+
+.sidebar.collapsed {
+  width: 64px;
+  padding: 0.75rem;
+  align-items: center;
+}
+
+.sidebar-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sidebar-button {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  border: 2px solid black;
+  border-radius: 999px;
+  background-color: white;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.15s ease, background-color 0.2s ease;
+}
+
+.sidebar-button:hover {
+  transform: translateY(-1px);
+  background-color: #f2f2f2;
+}
+
+.sidebar-button:active {
+  transform: translateY(1px);
+}
+
+.sidebar.collapsed .sidebar-button {
+  justify-content: center;
+  padding: 0.55rem;
+}
+
+.sidebar-section-title {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  text-align: left;
+  opacity: 0.6;
+}
+
+.sidebar.collapsed .sidebar-section-title {
+  display: none;
+}
+
+.session-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow-y: auto;
+  padding-right: 0.25rem;
+}
+
+.session-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  border: 2px solid transparent;
+  background-color: #f8f8f8;
+  border-radius: 16px;
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.session-item:hover {
+  background-color: #efefef;
+  border-color: black;
+}
+
+.session-item.active {
+  background-color: black;
+  color: white;
+  border-color: black;
+}
+
+.session-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar.collapsed .session-list {
+  display: none;
+}
+
+.app-container {
+  height: 100%;
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
 }
 
 @media (max-width: 768px) {
@@ -47,8 +167,7 @@
 
 .chat-container {
   width: 100%;
-  height: 100%;
-  max-height: 100%;
+  flex: 1;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -56,4 +175,45 @@
 .chat-container.empty {
   justify-content: center;
   align-items: center;
+}
+
+@media (max-width: 900px) {
+  #root {
+    padding: 0.75rem;
+  }
+
+  .app-shell {
+    flex-direction: column;
+    height: 92vh;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 24px;
+    padding: 0.75rem 1rem;
+  }
+
+  .sidebar.collapsed {
+    width: 100%;
+  }
+
+  .sidebar-header {
+    flex-direction: row;
+  }
+
+  .sidebar-section-title {
+    display: none;
+  }
+
+  .session-list {
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .session-item {
+    white-space: nowrap;
+  }
 }

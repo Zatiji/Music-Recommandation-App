@@ -92,6 +92,17 @@ export default function useChatSessions() {
     abortRef.current = controller;
   }, []);
 
+  const createNewChat = useCallback(() => {
+    const newChat = {
+      id: crypto.randomUUID(),
+      title: "New chat",
+      messages: [],
+    };
+    setChats(prev => [newChat, ...prev]);
+    setActiveChatId(newChat.id);
+    return newChat.id;
+  }, []);
+
   return {
     chats,
     activeChat,
@@ -102,5 +113,6 @@ export default function useChatSessions() {
     createAssistantPlaceholder,
     clearActiveStream,
     setActiveStream,
+    createNewChat,
   };
 }

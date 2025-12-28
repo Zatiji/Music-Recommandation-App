@@ -1,5 +1,7 @@
 // src/App.jsx
+import { useState } from "react";
 import ChatContainer from "./components/ChatContainer";
+import Sidebar from "./components/Sidebar";
 import UserInput from "./components/UserInput";
 import useChatSessions from "./hooks/useChatSessions";
 import { streamChatResponse } from "./service/chatApi";
@@ -7,14 +9,18 @@ import "./styles/Containers.css";
 
 function App() {
   const {
+    chats,
     activeChat,
     activeChatId,
+    setActiveChatId,
     appendAssistantChunk,
     appendUserMessage,
     createAssistantPlaceholder,
     clearActiveStream,
     setActiveStream,
+    createNewChat,
   } = useChatSessions();
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   const handleSendMessage = async (newMessage) => {
     if (!newMessage || !newMessage.trim()) return;
@@ -42,10 +48,31 @@ function App() {
     }
   };
 
+  const handleNewChat = () => {
+    clearActiveStream();
+    createNewChat();
+  };
+
+  const handleSelectChat = (chatId) => {
+    if (chatId === activeChatId) return;
+    clearActiveStream();
+    setActiveChatId(chatId);
+  };
+
   return (
-    <div className="app-container">
-      <ChatContainer messages={activeChat.messages} />
-      <UserInput onSend={handleSendMessage} />
+    <div className="app-shell">
+      <Sidebar
+        chats={chats}
+        activeChatId={activeChatId}
+        isCollapsed={isSidebarCollapsed}
+        onToggleCollapse={() => setIsSidebarCollapsed(prev => !prev)}
+        onNewChat={handleNewChat}
+        onSelectChat={handleSelectChat}
+      />
+      <div className="app-container">
+        <ChatContainer messages={activeChat.messages} />
+        <UserInput onSend={handleSendMessage} />
+      </div>
     </div>
   );
 }
