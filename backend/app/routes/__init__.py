@@ -1,5 +1,5 @@
-from .generate_response import generate_response
+from .generateResponse import generateResponse
 
 
 def register_routes(app):
-    app.register_blueprint(generate_response)
+    app.register_blueprint(generateResponse)

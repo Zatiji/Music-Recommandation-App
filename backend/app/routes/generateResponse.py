@@ -1,11 +1,11 @@
 from flask import Blueprint, request, Response, stream_with_context
 
-from app.services.llm import streamAiResponse
+from app.services.LLM import streamAiResponse
 import json
 
-generate_response = Blueprint("generate_response", __name__)
+generateResponse = Blueprint("generate_response", __name__)
 
-@generate_response.route("/generate-response", methods=["OPTIONS", "POST"])
+@generateResponse.route("/generate-response", methods=["OPTIONS", "POST"])
 def handleGenerateResponse():
     if request.method == "OPTIONS":
         return "", 204
