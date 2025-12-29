@@ -7,7 +7,7 @@ function TrackCardsMessage({ cards, source }) {
   return (
     <div className="message bot-message api-cards">
       <div className="api-cards-header">
-        <span>Recommendations from {sourceLabel}</span>
+        <span></span>
       </div>
       <div className="api-cards-grid">
         {cards.map((card, index) => {

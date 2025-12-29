@@ -1,5 +1,6 @@
 import json
 import logging
+import re
 from flask import Blueprint, request, Response, stream_with_context
 
 from app.services.llm import extractIntent, streamPresenterResponse
@@ -71,9 +72,27 @@ def _handleTrackRecommendation(query: str) -> tuple[list, list, str]:
     return results, extraInfo, correctedTrack
 
 
+def _cleanTagQuery(query: str) -> str:
+    tokens = re.findall(r"[a-z0-9-]+", query.lower())
+    stopwords = {
+        "track", "tracks", "song", "songs", "music", "me", "some", "any",
+        "please", "show", "recommend", "recommendations",
+    }
+    cleaned = " ".join(token for token in tokens if token not in stopwords)
+    return cleaned or query
+
+
 def _handleTagRecommendation(query: str) -> tuple[list, list, str]:
-    results = lastfm.getTopTracksByTag(query, limit=10)
-    return results, [], query
+    cleanedQuery = _cleanTagQuery(query)
+    results = lastfm.getTopTracksByTag(cleanedQuery, limit=10)
+    correctedQuery = cleanedQuery
+    if not results and cleanedQuery != query:
+        results = lastfm.getTopTracksByTag(query, limit=10)
+        correctedQuery = query
+    if not results:
+        results, extraInfo, correctedQuery = _handleTrendingRecommendation()
+        return results, extraInfo, correctedQuery
+    return results, [], correctedQuery
 
 
 def _handleTrendingRecommendation() -> tuple[list, list, str]:
