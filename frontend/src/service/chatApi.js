@@ -3,6 +3,7 @@ export async function streamChatResponse({
   sessionId,
   signal,
   onChunk,
+  onCards,
   onDone,
 }) {
   const response = await fetch("http://localhost:5001/generate-response", {
@@ -41,6 +42,10 @@ export async function streamChatResponse({
           const obj = JSON.parse(line);
           if (obj.done) {
             if (onDone) onDone();
+            continue;
+          }
+          if (Array.isArray(obj.cards)) {
+            if (onCards) onCards(obj.cards, obj.source || "lastfm");
             continue;
           }
           if (typeof obj.delta === "string") {

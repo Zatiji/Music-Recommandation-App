@@ -83,6 +83,27 @@ export default function useChatSessions() {
     return assistantId;
   }, [activeChatId]);
 
+  const insertAssistantCardsBefore = useCallback((assistantId, cards, source) => {
+    const cardMessage = {
+      id: crypto.randomUUID(),
+      type: "assistant-cards",
+      cards,
+      source,
+    };
+    setChats(prev =>
+      prev.map(chat => {
+        if (chat.id !== activeChatId) return chat;
+        const idx = chat.messages.findIndex(m => m.id === assistantId);
+        if (idx === -1) {
+          return { ...chat, messages: [...chat.messages, cardMessage] };
+        }
+        const nextMessages = chat.messages.slice();
+        nextMessages.splice(idx, 0, cardMessage);
+        return { ...chat, messages: nextMessages };
+      })
+    );
+  }, [activeChatId]);
+
   const clearActiveStream = useCallback(() => {
     if (abortRef.current) abortRef.current.abort();
     abortRef.current = null;
@@ -141,6 +162,7 @@ export default function useChatSessions() {
     appendAssistantChunk,
     appendUserMessage,
     createAssistantPlaceholder,
+    insertAssistantCardsBefore,
     clearActiveStream,
     setActiveStream,
     createNewChat,

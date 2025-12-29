@@ -1,0 +1,77 @@
+.api-cards {
+  align-self: flex-start;
+  background-color: #f7f7f7;
+  border: 1px solid #dedede;
+  max-width: 90%;
+}
+
+.api-cards-header {
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #4b5563;
+  margin-bottom: 0.75rem;
+}
+
+.api-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.75rem;
+}
+
+.api-card {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-height: 120px;
+}
+
+.api-card-top {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.api-card-type {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.45rem;
+  border-radius: 999px;
+  background-color: #111827;
+  color: #f9fafb;
+  letter-spacing: 0.08em;
+}
+
+.api-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.api-card-subtitle {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.api-card-link {
+  margin-top: auto;
+  font-size: 0.8rem;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.api-card-link:hover {
+  text-decoration: underline;
+}
+
+.api-card-link-muted {
+  color: #9ca3af;
+}
+
+@media (max-width: 600px) {
+  .api-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -16,6 +16,7 @@ function App() {
     appendAssistantChunk,
     appendUserMessage,
     createAssistantPlaceholder,
+    insertAssistantCardsBefore,
     clearActiveStream,
     setActiveStream,
     createNewChat,
@@ -41,6 +42,8 @@ function App() {
         sessionId: activeChatId,
         signal: controller.signal,
         onChunk: (chunk) => appendAssistantChunk(assistantId, chunk),
+        onCards: (cards, source) =>
+          insertAssistantCardsBefore(assistantId, cards, source),
       });
     } catch (err) {
       console.error("Stream error:", err);

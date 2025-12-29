@@ -93,6 +93,9 @@ def handleGenerateResponse():
 
     intent = extractIntent(user_message, sessionId=session_id)
     systemData = None
+    cardsPayload = None
+
+    _logger.info("Intent extracted: %s", intent)
 
     if intent.get("intent") == "recommendation":
         
@@ -121,6 +124,7 @@ def handleGenerateResponse():
                 results,
                 extraInfo,
             )
+            cardsPayload = results
             
         else:
             systemData = _buildSystemDataForEmpty()
@@ -128,6 +132,8 @@ def handleGenerateResponse():
     # Create generator for SSE
     @stream_with_context
     def generate():
+        if cardsPayload:
+            yield f"data: {json.dumps({'cards': cardsPayload, 'source': 'lastfm'})}\n\n"
         # Send each chunk as JSON: {"delta": "..."}
         for chunk in streamPresenterResponse(
             user_message,

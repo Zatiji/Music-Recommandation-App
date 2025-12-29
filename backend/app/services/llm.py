@@ -21,10 +21,18 @@ _INTENT_PROMPT = (
     "### ROLE: INTENT EXTRACTOR\n"
     "When the user asks for music, DO NOT reply with text. DO NOT hallucinate songs.\n"
     "Instead, analyze their request and output a STRICT JSON object to trigger the music database.\n\n"
+    "Classify as intent \"recommendation\" whenever the user asks for songs, music, "
+    "artists, albums, genres, vibes, moods, or anything like \"I need songs\" or "
+    "\"recommend me\".\n\n"
     "Format:\n"
     '{\n  "intent": "recommendation" | "chat",\n'
     '  "search_type": "artist" | "track" | "tag" | "none",\n'
     '  "query": "string",\n  "user_mood": "string"\n}\n'
+    "\nExamples:\n"
+    'User: "I need songs that have a lofi vibe"\n'
+    'You: {"intent": "recommendation", "search_type": "tag", "query": "lofi", "user_mood": "chill"}\n'
+    'User: "Hello, how are you?"\n'
+    'You: {"intent": "chat", "search_type": "none", "query": "", "user_mood": ""}\n'
 )
 
 _PRESENTER_PROMPT = (
@@ -36,6 +44,7 @@ _PRESENTER_PROMPT = (
     "- Explain briefly why these fit the user's request.\n"
     "- If the user asks \"Why?\", use the context of the genre/style to explain.\n"
     "- Keep it concise and engaging.\n"
+    "Format your response in Markdown (use short lists, bold labels, and line breaks).\n"
     "Never output JSON."
 )
 

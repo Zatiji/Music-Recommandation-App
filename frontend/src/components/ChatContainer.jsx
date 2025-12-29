@@ -1,5 +1,6 @@
 import UserMessage from "./UserMessage";
 import BotMessage from "./BotMessage";
+import TrackCardsMessage from "./TrackCardsMessage";
 import reactLogo from "../assets/react.svg";
 import { useEffect, useRef } from "react";
 import "../styles/Chat.css";
@@ -30,6 +31,14 @@ function ChatContainer({ messages }) {
 						return <UserMessage key={index} text={msg.content} />;
 					} else if (msg.type === "assistant") {
 						return <BotMessage key={index} text={msg.content} />;
+					} else if (msg.type === "assistant-cards") {
+						return (
+							<TrackCardsMessage
+								key={index}
+								cards={msg.cards || []}
+								source={msg.source}
+							/>
+						);
 					} else {
 						return null;
 					}
