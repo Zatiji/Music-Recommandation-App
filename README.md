@@ -32,3 +32,19 @@ Frontend:
 1. Start the backend: `python backend/main.py`.
 2. In a separate terminal, start the frontend: `npm run dev`.
 3. Open the app at `http://localhost:5173`.
+
+## Backend Workflow
+
+1. The frontend sends a POST to `/generate-response` with the user message and session id.
+2. The backend calls the LLM intent extractor to decide if the message is a recommendation request and to parse query/mood.
+3. If it is a recommendation, the backend queries Last.fm based on the intent:
+   - `artist` -> search + similar artists, with extra artist info for context.
+   - `track` -> search + similar tracks, with extra track info for context.
+   - `tag` -> top tracks by tag.
+   - fallback -> top trending tracks.
+4. The backend builds system context from the Last.fm results (or an empty-result prompt) and streams the LLM presenter response.
+5. The response is streamed back to the client as SSE:
+   - first optional `cards` payload for UI rendering,
+   - then incremental `delta` chunks,
+   - finally a `done` event.
+6. The session stores a running summary when the token budget is near the limit, keeping context small for future turns.

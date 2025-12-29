@@ -22,10 +22,15 @@ def _lastfmGET(params: dict) -> dict:
     log_params = dict(params)
     log_params.pop("api_key", None)
     _logger.info("Last.fm request: %s", log_params)
-    response = requests.get(_BASE_URL, params=params, timeout=10)
-    _logger.info("Last.fm response: %s %s", response.status_code, response.reason)
-    response.raise_for_status()
-    return response.json()
+    
+    try:
+        response = requests.get(_BASE_URL, params=params, timeout=10)
+        _logger.info("Last.fm response: %s %s", response.status_code, response.reason)
+        response.raise_for_status()
+        return response.json()
+    except requests.RequestException as exc:
+        _logger.exception("Last.fm request failed: %s", exc)
+        return {}
 
 
 def getSimilarArtist(artist: str, limit: int = 10) -> List[dict]:

@@ -29,7 +29,9 @@ def _buildSystemDataForResults(
 def _buildSystemDataForEmpty() -> str:
     return (
         "SYSTEM DATA: No results were returned from Last.fm. "
-        "Ask a short clarifying question or suggest a nearby artist/tag."
+        "Ask a short clarifying question or suggest a nearby artist/tag. "
+        "If mentioning the issue, say something like \"the wifi on my phone is messy\" "
+        "instead of naming the API."
     )
 
 
